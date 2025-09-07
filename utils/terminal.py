@@ -4,15 +4,14 @@ from utils.colors import rgb_to_hex
 import colorsys
 
 ANSI_SLOTS = ["black","red","green","yellow","blue","purple","cyan","white"]
-BRIGHT_SLOTS = ["brightBlack","brightRed","brightGreen","brightYellow","brightBlue","brightPurple","brightCyan","brightWhite"]
+BRIGHT_SLOTS = ["brightBlack","brightRed","brightGreen","brightYellow",
+                "brightBlue","brightPurple","brightCyan","brightWhite"]
 
 def assign_color_to_slot(rgb):
     r,g,b = rgb
     h,s,v = colorsys.rgb_to_hsv(r/255,g/255,b/255)
-    # background/foreground handled separately
     if v < 0.2: return "black"
     if s < 0.2 and v > 0.8: return "white"
-    # hue buckets
     if 0 <= h < 1/6: return "red"
     if 1/6 <= h < 1/3: return "yellow"
     if 1/3 <= h < 0.5: return "green"
@@ -31,30 +30,27 @@ def update_terminal_colors_full(image_path):
     thief = ColorThief(image_path)
     palette = thief.get_palette(color_count=16, quality=8)
 
-    # pad if too small
     while len(palette) < 16:
         palette.append((255,255,255))
 
-    # sort by brightness
     sorted_by_brightness = sorted(palette, key=lambda x: sum(x))
 
-    # Background = pure black
+    # Force black background
     bg = "#000000"
 
-    # Foreground = brightest color, slightly brightened
+    # Foreground = brightest palette color, slightly brightened
     fg_color = sorted_by_brightness[-1]
     fg = rgb_to_hex(brighten_color(fg_color, factor=1.4))
 
     scheme = {"name":"WindowDrip","background":bg,"foreground":fg}
 
+    # ANSI slots
     slot_colors = {}
-    # assign ANSI slots
     for c in palette:
         slot = assign_color_to_slot(c)
         if slot not in slot_colors:
             slot_colors[slot] = c
 
-    # assign ANSI slots and bright slots
     for i, slot in enumerate(ANSI_SLOTS):
         rgb = slot_colors.get(slot,(128,128,128))
         scheme[slot] = rgb_to_hex(rgb)
@@ -79,6 +75,9 @@ def update_terminal_colors_full(image_path):
         # apply scheme to all profiles
         for p in settings.get("profiles",{}).get("list",[]):
             p["colorScheme"]="WindowDrip"
+            # force black background
+            p["useAcrylic"]=False
+            p["backgroundImage"]=""
 
         with open(settings_path,"w",encoding="utf-8") as f:
             json.dump(settings,f,indent=4)
