@@ -1,8 +1,7 @@
-import sys
-import os
-import ctypes
-from utils.colors import get_dominant_color, rgb_to_hex
+import sys, os, ctypes
+from utils.colors import get_dominant_color
 from utils.terminal import update_terminal_colors_full
+from utils.colors import rgb_to_hex
 
 SPI_SETDESKWALLPAPER = 20
 
@@ -14,21 +13,18 @@ def set_wallpaper(image_path):
 def main(image_path):
     print("[*] Applying WindowDrip (Auto-accent mode)...")
 
-    # 1. Set wallpaper
+    # 1 Set wallpaper
     set_wallpaper(image_path)
 
-    # 2. Extract dominant color for terminal
+    # 2 Extract dominant color for quick display
     color = get_dominant_color(image_path)
     hex_color = rgb_to_hex(color)
     print(f"[+] Dominant color extracted: {hex_color}")
 
-    # 3. Update Windows Terminal colors
+    # 3 Full Terminal ANSI drip
     update_terminal_colors_full(image_path)
-    print(f"[+] Terminal theme updated with {hex_color}")
 
-    # 4. Accent handled by Windows (Auto mode)
-    print("[i] Accent color handled by Windows. Make sure Auto accent mode is ON in Settings → Personalization → Colors.")
-
+    print(f"[i] Accent color handled by Windows. Make sure Auto accent mode is ON in Settings → Personalization → Colors.")
     print("[✓] Done. Your desktop drips now.")
 
 if __name__ == "__main__":
