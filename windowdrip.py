@@ -2,7 +2,7 @@ import sys
 import os
 import ctypes
 from utils.colors import get_dominant_color, rgb_to_hex
-from utils.terminal import update_terminal_colors
+from utils.terminal import update_terminal_colors_full
 
 SPI_SETDESKWALLPAPER = 20
 
@@ -23,7 +23,7 @@ def main(image_path):
     print(f"[+] Dominant color extracted: {hex_color}")
 
     # 3. Update Windows Terminal colors
-    update_terminal_colors(hex_color)
+    update_terminal_colors_full(image_path)
     print(f"[+] Terminal theme updated with {hex_color}")
 
     # 4. Accent handled by Windows (Auto mode)
