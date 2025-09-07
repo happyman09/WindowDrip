@@ -1,34 +1,37 @@
 import sys, os, ctypes
 from utils.colors import get_dominant_color
-from utils.terminal import update_terminal_colors_full
-from utils.colors import rgb_to_hex
-
-SPI_SETDESKWALLPAPER = 20
+from utils.terminal import update_terminal_colors_full, terminal_color_preview
 
 def set_wallpaper(image_path):
-    abs_path = os.path.abspath(image_path)
-    ctypes.windll.user32.SystemParametersInfoW(SPI_SETDESKWALLPAPER, 0, abs_path, 3)
-    print(f"[+] Wallpaper set: {abs_path}")
+    """Set the Windows desktop wallpaper."""
+    SPI_SETDESKWALLPAPER = 20
+    ctypes.windll.user32.SystemParametersInfoW(SPI_SETDESKWALLPAPER, 0, image_path, 3)
+    print(f"[+] Wallpaper set: {image_path}")
 
 def main(image_path):
-    print("[*] Applying WindowDrip (Auto-accent mode)...")
+    if not os.path.isfile(image_path):
+        print(f"[!] File not found: {image_path}")
+        return
 
-    # 1 Set wallpaper
+    # 1️ Set wallpaper
     set_wallpaper(image_path)
 
-    # 2 Extract dominant color for quick display
-    color = get_dominant_color(image_path)
-    hex_color = rgb_to_hex(color)
-    print(f"[+] Dominant color extracted: {hex_color}")
+    # 2️ Extract dominant color (optional, for accent info)
+    dominant_color = get_dominant_color(image_path)
+    print(f"[+] Dominant color extracted: {dominant_color}")
 
-    # 3 Full Terminal ANSI drip
+    # 3️ Apply Drip Hard ANSI terminal colors
     update_terminal_colors_full(image_path)
 
-    print(f"[i] Accent color handled by Windows. Make sure Auto accent mode is ON in Settings → Personalization → Colors.")
+    # 4️ Animated terminal color preview
+    terminal_color_preview()
+
+    # 5️ Final info
+    print("[i] Accent color handled by Windows. Make sure Auto accent mode is ON in Settings → Personalization → Colors.")
     print("[✓] Done. Your desktop drips now.")
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-        print("Usage: python windowdrip.py <path_to_wallpaper>")
+        print("Usage: python windowdrip.py <image_path>")
     else:
         main(sys.argv[1])
