@@ -35,28 +35,32 @@ def update_terminal_colors_full(image_path):
     while len(palette) < 16:
         palette.append((255,255,255))
 
-    # Background = darkest, Foreground = lightest
+    # sort by brightness
     sorted_by_brightness = sorted(palette, key=lambda x: sum(x))
-    bg = rgb_to_hex(sorted_by_brightness[0])
-    fg = rgb_to_hex(sorted_by_brightness[-1])
+
+    # Background = pure black
+    bg = "#000000"
+
+    # Foreground = brightest color, slightly brightened
+    fg_color = sorted_by_brightness[-1]
+    fg = rgb_to_hex(brighten_color(fg_color, factor=1.4))
 
     scheme = {"name":"WindowDrip","background":bg,"foreground":fg}
 
     slot_colors = {}
-    # assign normal slots
+    # assign ANSI slots
     for c in palette:
         slot = assign_color_to_slot(c)
         if slot not in slot_colors:
             slot_colors[slot] = c
 
-    # assign ANSI slots
+    # assign ANSI slots and bright slots
     for i, slot in enumerate(ANSI_SLOTS):
         rgb = slot_colors.get(slot,(128,128,128))
         scheme[slot] = rgb_to_hex(rgb)
-        # bright slot = brighter version
         scheme[BRIGHT_SLOTS[i]] = rgb_to_hex(brighten_color(rgb))
 
-    # path to settings.json
+    # path to Windows Terminal settings.json
     settings_path = os.path.expandvars(
         r"%LOCALAPPDATA%\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
     )
