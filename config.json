@@ -1,0 +1,11 @@
+{
+  "wallpaper_folder": "C:\\Users\\mahox\\Pictures\\Wallpapers",
+  "rotation_interval_minutes": 10,
+  "background_mode": "black",
+  "apps": {
+    "vscode": true,
+    "notepadpp": true,
+    "spotify": true,
+    "discord": true
+  }
+}

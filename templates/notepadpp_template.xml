@@ -1,0 +1,7 @@
+<NotepadPlus>
+    <Styles>
+        <Style name="Default" fgColor="{foreground}" bgColor="{background}" />
+        <Style name="Keyword" fgColor="{accent}" />
+        <!-- add more styles if desired -->
+    </Styles>
+</NotepadPlus>

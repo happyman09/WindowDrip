@@ -1,0 +1,13 @@
+/* WindowDrip Spotify Theme */
+#main {
+    background-color: {background} !important;
+    color: {foreground} !important;
+}
+
+.button, .progress-bar {
+    background-color: {accent} !important;
+}
+
+.song-title, .artist-name {
+    color: {foreground} !important;
+}

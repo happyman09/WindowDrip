@@ -1,0 +1,15 @@
+/* WindowDrip Discord Theme (BetterDiscord) */
+.theme-dark {
+    --background-primary: {background};
+    --text-normal: {foreground};
+    --interactive-normal: {accent};
+}
+
+.theme-dark .button-38aScr, 
+.theme-dark .progressBar-3Wy5vC {
+    background-color: {accent} !important;
+}
+
+.theme-dark .messageContent-2t3eCI {
+    color: {foreground} !important;
+}

@@ -1,0 +1,14 @@
+"workbench.colorCustomizations": {
+    "editor.background": "#000000",
+    "editor.foreground": "#ffffff",
+    "activityBar.background": "#d470ac",
+    "sideBar.background": "#212121",
+    "statusBar.background": "#d470ac",
+    "titleBar.activeBackground": "#d470ac",
+    "titleBar.inactiveBackground": "#7f3f87"
+},
+"editor.tokenColorCustomizations": {
+    "comments": "#aaaaaa",
+    "keywords": "#d470ac",
+    "strings": "#ffb36a"
+}
