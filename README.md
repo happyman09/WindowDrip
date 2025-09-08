@@ -83,3 +83,6 @@ Phase 3: App integration (VS Code, Notepad++, Spotify…) → ⚠ Experimental /
 Auto accent mode must be ON in Settings → Personalization → Colors.
 
 Background effects are optional; some profiles may ignore pure black background.
+
+## Notes
+- Gave up (Phase 3) as it's either not possible on Windows or not in my skill range...
